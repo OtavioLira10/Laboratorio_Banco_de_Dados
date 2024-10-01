@@ -13,14 +13,16 @@ def transform_historicos(df_historicos):
     return df_historicos
 
 def transform_turmas(df_turmas):
-    
     df_turmas.rename(columns={'tot_vagas': 'total_vagas', 'vag_ocup': 'vagas_ocupadas'}, inplace=True)
 
-    
     if 'vagas_ocupadas' in df_turmas.columns and 'total_vagas' in df_turmas.columns:
         df_turmas.loc[df_turmas['vagas_ocupadas'] > df_turmas['total_vagas'], 'vagas_ocupadas'] = df_turmas['total_vagas']
+    
+    # Criar coluna combinando Ano e Semestre
+    df_turmas['Ano/Semestre'] = df_turmas['ano'].astype(str) + '.' + df_turmas['semestre'].astype(str)
 
     return df_turmas
+
 
 def transform_cursos(df_cursos, df_professores):
     # Fazer o join para adicionar o nome do coordenador
